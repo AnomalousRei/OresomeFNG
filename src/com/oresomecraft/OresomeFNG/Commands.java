@@ -1,4 +1,4 @@
-package com.oresomecraft;
+package com.oresomecraft.OresomeFNG;
 
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;

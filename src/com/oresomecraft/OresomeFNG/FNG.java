@@ -1,4 +1,4 @@
-package com.oresomecraft;
+package com.oresomecraft.OresomeFNG;
 
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
