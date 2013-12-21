@@ -18,7 +18,6 @@ public class FNG extends JavaPlugin {
 
     public static FNG plugin;
     public static Logger logger = Logger.getLogger("Minecraft");
-    public static YamlConfiguration config = new YamlConfiguration();
 
     public static boolean nonFridayOverride = false;
 
