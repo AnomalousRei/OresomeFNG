@@ -6,8 +6,10 @@ import com.sk89q.minecraft.util.commands.CommandPermissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Commands {
 
@@ -25,8 +27,13 @@ public class Commands {
             desc = "Override OresomeFNG to work when it isn't friday",
             min = 0,
             max = 0)
-    @CommandPermissions("FNG.override")
+    @CommandPermissions("oresomebattles.rank.mod")
     public void override(CommandContext args, CommandSender sender) {
+        Player p = (Player)sender;
+        if(!(sender.getName().equals("R3creat3")) && !p.hasPermission("oresomebattles.rank.admin")){
+            sender.sendMessage(ChatColor.RED + "You don't have permission.");
+            return;
+        }
         if (FNG.getInstance().nonFridayOverride) {
             FNG.getInstance().nonFridayOverride = false;
             sender.sendMessage(ChatColor.RED + "[FNG] OresomeFNG will only function on fridays now.");
@@ -63,12 +70,14 @@ public class Commands {
             sender.sendMessage(ChatColor.RED + "OresomeFNG only functions on fridays!");
             return;
         }
-        if (vote) {
-            sender.sendMessage(ChatColor.RED + "There is already a vote!");
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        if (hour > 17 && hour < 21 && !FNG.nonFridayOverride) {
+            sender.sendMessage(ChatColor.RED + "OresomeFNG only functions between 5PM and 9PM!");
             return;
         }
-        if (!FNG.mapExists(args.getString(0))) {
-            sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
+        if (vote) {
+            sender.sendMessage(ChatColor.RED + "There is already a vote!");
             return;
         }
         startVote(args.getString(0));
@@ -82,7 +91,6 @@ public class Commands {
             usage = "<map/yes/no>",
             min = 1,
             max = 1)
-    @CommandPermissions("oresomebattles.rank.mod")
     public void fngvote(CommandContext args, CommandSender sender) {
         if (!vote) {
             sender.sendMessage(ChatColor.RED + "No vote is being held!");
@@ -97,6 +105,7 @@ public class Commands {
             return;
         }
 
+        sender.sendMessage(ChatColor.RED + "Thanks for voting!");
         alreadyVoted.add(sender.getName());
         if (args.getString(0).equalsIgnoreCase("yes")) {
             yes++;
