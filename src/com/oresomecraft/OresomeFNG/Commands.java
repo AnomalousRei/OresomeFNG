@@ -27,13 +27,9 @@ public class Commands {
             desc = "Override OresomeFNG to work when it isn't friday",
             min = 0,
             max = 0)
-    @CommandPermissions("oresomebattles.rank.mod")
+    @CommandPermissions("oresomebattles.rank.admin")
     public void override(CommandContext args, CommandSender sender) {
         Player p = (Player)sender;
-        if(!(sender.getName().equals("R3creat3")) && !p.hasPermission("oresomebattles.rank.admin")){
-            sender.sendMessage(ChatColor.RED + "You don't have permission.");
-            return;
-        }
         if (FNG.getInstance().nonFridayOverride) {
             FNG.getInstance().nonFridayOverride = false;
             sender.sendMessage(ChatColor.RED + "[FNG] OresomeFNG will only function on fridays now.");
